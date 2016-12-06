@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <title>Http Tests</title>
+    <!-- Jasmine References -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.3.3/jasmine.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.3.3/jasmine.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.3.3/jasmine-html.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.3.3/boot.min.js"></script>
+
+
+    <script type="text/javascript" src="dist/js/lib.min.js"></script>
+    <script type="text/javascript" src="dist/js/channel/channel.22.js"></script>
+    <script type="text/javascript" src="dist/js/tubi.zgd1f-v0.7.0.js"></script>
+    <script type="text/javascript" src="dist/js/tubi-templates.zgd1f-v0.7.0.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.9/angular-mocks.js"></script>
+    
+    <script type="text/javascript" src="mocks.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+      describe('TUBI', function () {
+        var scope, location, getctr, httpBackend,http;
+        beforeEach(module('tubiClientApp'));
+        beforeEach(inject(function($rootScope, $controller,$location,$httpBackend){
+            scope=$rootScope.$new();
+            location=$location;
+            httpBackend=$httpBackend;
+            location.search= function(){
+                return mockApi
+            };
+            getctr = $controller;
+        }));
+
+
+
+
+
+
+        describe('example httpBackend', function() {
+
+
+          it('tubi ejemplo', function () {          
+
+
+
+            //Traducciones
+            httpBackend.when('POST','http://localhost:9080/isban-tubi-web/rest/dataservice/executeservice/',
+            mockTraduccionRequest).respond(200, mockTraduccion);
+            //Flow  
+            httpBackend.when('POST','http://localhost:9080/isban-tubi-web/rest/renderservice/executerenderservice/',
+            mockflowRequest).respond(200,mockflow);
+            //Checkpoint
+            httpBackend.when('POST','http://localhost:9080/isban-tubi-web/rest/renderservice/executerenderservice/',
+            mockCheckpointRequest).respond(200,mockCheckpoint);
+            //Form
+            httpBackend.when('POST','http://localhost:9080/isban-tubi-web/rest/renderservice/executerenderservice/',
+            mockformRequest).respond(200,mockform);
+            //Coordinador
+            httpBackend.when('POST','http://localhost:9080/isban-tubi-web/rest/dataservice/executeservice/',
+            mockCoordinadorRequest).respond(200, mockCoordinador);         
+
+
+            //Traducciones
+            // httpBackend.expect('POST','http://localhost:9080/isban-tubi-web/rest/dataservice/executeservice/',mockTraduccionRequest);
+            // //Flow  
+            // httpBackend.expect('POST','http://localhost:9080/isban-tubi-web/rest/renderservice/executerenderservice/',mockflowRequest);            
+            // //Checkpoint
+            // httpBackend.expect('POST','http://localhost:9080/isban-tubi-web/rest/renderservice/executerenderservice/',mockCheckpointRequest);            
+            // //Form
+            // httpBackend.expect('POST','http://localhost:9080/isban-tubi-web/rest/renderservice/executerenderservice/',mockformRequest);
+            // //Coordinador
+            // httpBackend.expect('POST','http://localhost:9080/isban-tubi-web/rest/dataservice/executeservice/',mockCoordinadorRequest);       
+
+
+
+            getctr('formController', { 
+              $scope: scope, 
+              $location: location 
+            });
+            httpBackend.flush();
+            expect(scope.getTranslationKey("ERROR_NULO")).toEqual("Este es un error de traduccion");
+
+          });
+
+        });
+      }); 
+    </script>
+
+  </body>
+</html>

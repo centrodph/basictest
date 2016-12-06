@@ -1,0 +1,39 @@
+describe('Protractor Demo App', function() {
+	
+  beforeEach(function() {
+    browser.get('http://localhost:9080/isban-tubi-client-angular-web/formulario.html?flowId=1&channelId=22&nup=02324926&locale=es-AR&token=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&subChannel=63&branch=0280&racfProfile=perfil_racf&solHeaderId=undefined&modo=modo-full-screen&alive=1000&nocache=V_5185598');
+  });	
+	
+/*	
+  it('Debe tener el titulo', function() {
+    expect(browser.getTitle()).toEqual('TUBI - Tu Banco Inteligente');
+  });
+  */
+  
+  it('debe tener nombre con valor ', function() {
+	  
+		var result = element.all(by.repeater('action in checkpoint.formActions'));
+
+		element.all(by.repeater('action in checkpoint.formActions')).getInnerHtml().then(function(result){
+			console.log(result);
+		});
+		
+		result.each(function(entry) {
+			
+			var input = entry.element(by.binding("action.label"));
+			console.log(input);
+			input.then(function(r){
+					console.log(r);
+			});
+			
+			// do smth with the input
+		});
+		
+		expect("s").toEqual('s');
+  });  
+  
+  
+  
+  
+  
+});
